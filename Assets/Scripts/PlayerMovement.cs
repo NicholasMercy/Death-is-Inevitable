@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerStates
+{
+    walkState, runState, jumpState
+}
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
+    public float intialSpeed;
     public float moveSpeed;
-
+    public float doubleSpeed;
     public float groundDrag;
 
     public float jumpForce;
@@ -16,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     bool readyToJump;
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-
+    public KeyCode speedKey = KeyCode.LeftShift;
 
 
     [Header("Ground Check")]
@@ -31,48 +36,72 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 moveDirection;
 
+    [Header("PlayerStates")]
+    public PlayerStates playerState;
+
+    [Header("GameStates")]
+          
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
-    {
+    {     
         readyToJump = true;
         rb = GetComponent<Rigidbody>(); 
         rb.freezeRotation = true;   
     }
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (GameManager.Instance.gameState == GameStates.playing)
+            MovePlayer();
     }
     // Update is called once per frame
     void Update()
     {
-        //groundCheck
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f, whatIsGround);
-        Debug.Log(grounded);
-
-        MyInput();
-        SpeedControl(); 
-        if (grounded)
-            rb.drag = groundDrag;
-        else
+        if(GameManager.Instance.gameState == GameStates.playing)
         {
-            rb.drag = 0;
+            //groundCheck
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f, whatIsGround);
+            // Debug.Log(grounded);
+
+            MyInput();
+            SpeedControl();
+            if (grounded)
+                rb.drag = groundDrag;
+            else
+            {
+                rb.drag = 0;
+            }
         }
+        
     }
 
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        //run
+        if(Input.GetKey(speedKey) && grounded)
+        {
+            playerState = PlayerStates.runState;
+            moveSpeed = doubleSpeed;
+            Debug.Log("working");
+        }
+        //walk
+        else
+        {
+            playerState = PlayerStates.walkState;
+            moveSpeed = intialSpeed;
+        }
+        //jump
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
           readyToJump = false;
             Jump();
-
+            playerState = PlayerStates.jumpState;   
             Invoke(nameof(ResetJump), jumpCooldown);
         }
     }
-
     private void MovePlayer()
     {
         //calculate movement direction 
@@ -103,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        Debug.Log(rb.velocity.x);
+        //Debug.Log(rb.velocity.x);
         rb.AddForce(transform.up*jumpForce,ForceMode.Impulse);    
     }
     private void ResetJump()

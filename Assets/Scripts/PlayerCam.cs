@@ -14,16 +14,31 @@ public class PlayerCam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;   
-        Cursor.visible = false; 
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+       if(GameManager.Instance.gameState == GameStates.playing)
+        {
+            MouseLook();    
+        }
+       else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+    }
+
+    void MouseLook()
+    {
         //get mouse input 
-        float mouseX= Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensX;
-        float mouseY= Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensY;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensX;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensY;
 
         yRotation += mouseX;
         xRotation -= mouseY;
