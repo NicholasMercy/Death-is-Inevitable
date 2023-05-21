@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class UiManager : MonoBehaviour
 {
-    [SerializeField] List<GameObject> canvasList = new List<GameObject>();  
+    [SerializeField] List<GameObject> canvasList = new List<GameObject>();
+
+   
 
     private void Awake()
     {
@@ -14,7 +17,7 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
-            
+        
     }
 
     private void OnDestroy()
@@ -35,7 +38,10 @@ public class UiManager : MonoBehaviour
             if(canvas.GetComponent<CanvasType>().gameStates == state_)
             { 
                 canvas.SetActive(true);
+                
+                
             }
         }
+        
     }
 }

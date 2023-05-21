@@ -9,7 +9,7 @@ public class SpawnManager : MonoBehaviour
     float timerEnemy = 0;
     float timerPowerUp = 0;  
     [SerializeField]
-    float multiplier = 0.5f;
+    public float multiplier = 0.5f;
     float spawntimeEnemy = 2f;
 
     float spawntimePowerUp = 1f;

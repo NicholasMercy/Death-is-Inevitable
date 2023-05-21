@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float intialSpeed;
     public float moveSpeed;
     public float doubleSpeed;
-    public float groundDrag;
+    public float groundDrag; 
 
     public float jumpForce;
     public float jumpCooldown;
@@ -39,13 +39,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("PlayerStates")]
     public PlayerStates playerState;
 
-    [Header("GameStates")]
-          
+    [Header("CanvasPlaying")]
+    CanvasType playingCanvas; 
 
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {     
+        playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>(); 
         readyToJump = true;
         rb = GetComponent<Rigidbody>(); 
         rb.freezeRotation = true;   
@@ -61,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if(GameManager.Instance.gameState == GameStates.playing)
         {
             //groundCheck
+            
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f, whatIsGround);
             // Debug.Log(grounded);
 
@@ -72,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.drag = 0;
             }
+            //print(moveSpeed);
         }
         
     }
@@ -139,4 +142,35 @@ public class PlayerMovement : MonoBehaviour
     {
         readyToJump = true;
     }
+
+    public void speedChanger(float age)
+    {
+
+        if(age< 25f)
+        {
+            intialSpeed = 15f;
+            doubleSpeed = 18f;
+            playingCanvas.updateUI(moveSpeed, age);
+            
+
+
+        }
+        else if(age< 60f)
+        {
+
+            intialSpeed = 10f;
+            doubleSpeed = 13f;
+            playingCanvas.updateUI(moveSpeed, age);
+
+        }
+        else if(age < 100f)
+        {
+
+            intialSpeed = 5f;
+            doubleSpeed = 8f;
+            playingCanvas.updateUI(moveSpeed, age);
+
+        }
+    }
 }
+

@@ -10,11 +10,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public GameStates gameState;
 
+    float score = 0;
+
     public static event Action<GameStates> GameStateChanged;
     [Header("Input Changers")]
     KeyCode escape = KeyCode.Escape;
-    bool pause = false; 
-
+    bool pause = false;
+    CanvasType playingCanvas;
 
     private void Awake()
     {
@@ -23,10 +25,17 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ChangeGameState(GameStates.playing);
+        playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>();
     }
     private void Update()
     {
        StateInputChange();  
+        if(gameState == GameStates.playing) 
+        {
+            score += Time.deltaTime * 0.5f;
+            playingCanvas.updateScoreStatus(score);
+        
+        }
     }
 
 
@@ -37,7 +46,7 @@ public class GameManager : MonoBehaviour
         {
             case GameStates.playing:
                 LogUpdate(gameState);
-                Time.timeScale = 1;
+                Time.timeScale = 1;             
                 break;
             case GameStates.pause:
                 LogUpdate(gameState);

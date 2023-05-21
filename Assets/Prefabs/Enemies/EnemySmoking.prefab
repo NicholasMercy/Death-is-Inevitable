@@ -87,10 +87,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   agent: {fileID: 2318861926427300853}
-  speed: 12
+  intialSpeed: 12
+  Cspeed: 7
   angularspeed: 300
-  secondsAlive: 40
+  secondsAlive: 50
   ageAdd: 7
+  death: 0
 --- !u!1 &7825719919514837046
 GameObject:
   m_ObjectHideFlags: 0

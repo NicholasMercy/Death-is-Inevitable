@@ -11,9 +11,10 @@ public class EnemyObjects : MonoBehaviour
     public NavMeshAgent agent;
     Transform player;
     [Header("Stats")]
-    [SerializeField] float speed,angularspeed,secondsAlive, ageAdd;
-   
-    bool death = false;
+    [SerializeField] float intialSpeed,Cspeed,angularspeed,secondsAlive, ageAdd;
+    CanvasType playingCanvas;
+
+    public bool death = false;
     // Start is called before the first frame update
 
    
@@ -22,6 +23,7 @@ public class EnemyObjects : MonoBehaviour
         SetStats();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(DeathTimer(secondsAlive));
+        playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>();
     }
 
     // Update is called once per frame
@@ -29,12 +31,13 @@ public class EnemyObjects : MonoBehaviour
     {
        
        if(!death && GameManager.Instance.gameState == GameStates.playing)
-        agent.SetDestination(player.position);    
+        agent.SetDestination(player.position); 
+       
     }
 
     void SetStats()
     {
-        agent.speed = speed;  
+        agent.speed = intialSpeed;  
         agent.angularSpeed = angularspeed;  
     }
 
@@ -48,8 +51,28 @@ public class EnemyObjects : MonoBehaviour
 
         }
     }
+    public IEnumerator speedReduction()
+    {
 
-    IEnumerator DeathOnHit()
+        agent.speed = Cspeed;
+        playingCanvas.updateBoxStatus("SPEED REDUCTION");
+        yield return new WaitForSeconds(6f);
+        playingCanvas.updateBoxStatus("Nothing Active");
+        agent.speed = intialSpeed;
+        
+    }
+    public IEnumerator speedUp()
+    {
+
+        agent.speed = Cspeed+15;
+        playingCanvas.updateBoxStatus("SPEED UP");
+        yield return new WaitForSeconds(3f);
+        playingCanvas.updateBoxStatus("Nothing Active");
+        agent.speed = intialSpeed;
+
+    }
+
+    public IEnumerator DeathOnHit()
     {
         yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);

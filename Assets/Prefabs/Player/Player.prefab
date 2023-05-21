@@ -67,7 +67,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intialSpeed: 9
   moveSpeed: 9
-  doubleSpeed: 12
+  doubleSpeed: 14
   groundDrag: 5
   jumpForce: 12
   jumpCooldown: 0.25
