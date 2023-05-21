@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
      void LogUpdate(GameStates gameState_) { 
     
-        Debug.Log("GameState = " + " " + gameState_);       
+       // Debug.Log("GameState = " + " " + gameState_);       
     }
     private void StateInputChange()
     {

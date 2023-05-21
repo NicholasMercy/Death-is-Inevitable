@@ -42,4 +42,8 @@ public class PlayStats : MonoBehaviour
     {
         age += Age; 
     }
+    public void ReduceAge(float Age)
+    {
+        age -= Age;
+    }
 }
