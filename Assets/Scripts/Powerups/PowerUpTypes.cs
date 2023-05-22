@@ -7,10 +7,12 @@ public class PowerUpTypes : MonoBehaviour
     // Start is called before the first frame update
     public powerUp type;
     [SerializeField] float ageReduction, timeAlive;
-
+    AudioManager audioManager;
     private void Start()
     {
         StartCoroutine(DeathTimer(timeAlive));
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,10 +28,15 @@ public class PowerUpTypes : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        transform.Rotate(0, 0, 50 * Time.deltaTime);
+    }
 
     IEnumerator DeathOnHit()
     {
-        yield return new WaitForSeconds(0.01f);
+        audioManager.Play("DeathPowerUp");
+        yield return new WaitForSeconds(0.01f);     
         Destroy(gameObject);
     }
 

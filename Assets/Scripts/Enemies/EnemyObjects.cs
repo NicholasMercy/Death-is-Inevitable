@@ -16,13 +16,17 @@ public class EnemyObjects : MonoBehaviour
 
     public bool death = false;
     // Start is called before the first frame update
+    AudioManager audioManager;
+    
 
-   
     void Start()
     {
         SetStats();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(DeathTimer(secondsAlive));
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+       // audioManager.Play("Spawn");
+        
         playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>();
     }
 
@@ -45,6 +49,7 @@ public class EnemyObjects : MonoBehaviour
     {
        if(collision.gameObject.CompareTag("Player"))
         {
+            audioManager.Play("HitPlayer");
             collision.gameObject.GetComponent<PlayStats>().AddAge(ageAdd);
             death = true;   
             StartCoroutine(DeathOnHit());

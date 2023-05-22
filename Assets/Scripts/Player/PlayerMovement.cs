@@ -41,12 +41,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("CanvasPlaying")]
     CanvasType playingCanvas; 
-
+    AudioManager audioManager;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {     
-        playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>(); 
+        playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         readyToJump = true;
         rb = GetComponent<Rigidbody>(); 
         rb.freezeRotation = true;   
@@ -86,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         //run
         if(Input.GetKey(speedKey) && grounded)
         {
+
             playerState = PlayerStates.runState;
             moveSpeed = doubleSpeed;
             Debug.Log("working");
@@ -99,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
         //jump
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
+
           readyToJump = false;
             Jump();
             playerState = PlayerStates.jumpState;   
@@ -134,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         //reset y velocity
+        audioManager.Play("Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         //Debug.Log(rb.velocity.x);
         rb.AddForce(transform.up*jumpForce,ForceMode.Impulse);    

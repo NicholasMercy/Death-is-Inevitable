@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     KeyCode escape = KeyCode.Escape;
     bool pause = false;
     CanvasType playingCanvas;
-
+    AudioManager audioManager;  
     private void Awake()
     {
         Instance = this;    
@@ -25,7 +25,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ChangeGameState(GameStates.playing);
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>();
+        audioManager.Play("Background");
     }
     private void Update()
     {
