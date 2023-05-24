@@ -8,17 +8,34 @@ public class PowerUpTypes : MonoBehaviour
     public powerUp type;
     [SerializeField] float ageReduction, timeAlive;
     AudioManager audioManager;
+    CanvasType playingCanvas;
     private void Start()
     {
         StartCoroutine(DeathTimer(timeAlive));
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>();
 
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayStats>().ReduceAge(ageReduction);       
+            collision.gameObject.GetComponent<PlayStats>().ReduceAge(ageReduction);
+            switch (type)
+            {
+                case powerUp.Fruits:
+                    playingCanvas.updateDialogueText("ATE SOME FRUIT");
+                    playingCanvas.VibrateAge();
+                    break;
+                case powerUp.Veggies:
+                    playingCanvas.updateDialogueText("ATE SOME VEGGIES");
+                    playingCanvas.VibrateAge();
+                    break;
+                case powerUp.Exercise:
+                    playingCanvas.updateDialogueText("DID SOME EXCERCISE");
+                    playingCanvas.VibrateAge();
+                    break;
+            }
             StartCoroutine(DeathOnHit());
 
         }

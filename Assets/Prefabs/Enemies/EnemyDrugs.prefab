@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03e5638237bad244aba056197168ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 2
   agent: {fileID: 3607645158764813258}
   intialSpeed: 11
   Cspeed: 6

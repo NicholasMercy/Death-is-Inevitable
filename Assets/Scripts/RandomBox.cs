@@ -43,9 +43,10 @@ public class RandomBox : MonoBehaviour
                     audioManager.Play("BoxInteract");
                     audioManager.Play("EnemiesDestroyed");
                     StartCoroutine(g.DeathOnHit());
-                    print("ENEMIES DESTROYED");
-                    playingCanvas.updateBoxStatus("ENEMIES DESTROYED");
-                    
+                  //  print("ENEMIES DESTROYED");
+                    playingCanvas.updateBoxStatus("TEMPTATIONS DESTROYED");
+                    playingCanvas.updateDialogueText("ALL TEMPTATIONS HAVE BEEN DESTORYED!");
+
                 }
                 break;
             case 2:
@@ -54,7 +55,9 @@ public class RandomBox : MonoBehaviour
                     audioManager.Play("BoxInteract");
                     audioManager.Play("SpeedDown");
                     StartCoroutine(g.speedReduction());
-                    print("ENEMIES SPEEDREDUCTION");
+                    playingCanvas.updateBoxStatus("TEMPTATIONS SPEED DOWN");
+                    playingCanvas.updateDialogueText("ALL MY TEMPTATIONS SLOW DOWN!");
+                    // print("ENEMIES SPEEDREDUCTION");
                 }
                 break;
             case 3:
@@ -62,8 +65,10 @@ public class RandomBox : MonoBehaviour
                 {
                     audioManager.Play("BoxInteract");
                     audioManager.Play("SpeedUp");
+                    playingCanvas.updateBoxStatus("TEMPTATIONS SPEED UP");
+                    playingCanvas.updateDialogueText("OH NO I NEED SOMETHING TO DRINK OR TAKE OR SMOKE!");
                     StartCoroutine(g.speedUp());
-                    print("ENEMIES SPEEDUP");
+                   // print("ENEMIES SPEEDUP");
                 }
                 break;
 

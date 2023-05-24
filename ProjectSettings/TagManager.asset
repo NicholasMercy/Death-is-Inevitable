@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - Playing
+  - GameOver
   layers:
   - Default
   - TransparentFX

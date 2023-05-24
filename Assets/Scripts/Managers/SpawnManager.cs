@@ -20,19 +20,25 @@ public class SpawnManager : MonoBehaviour
     }
     private void Update()
     {
-        if(timerEnemy >= spawntimeEnemy)
+        if(GameManager.Instance.gameState == GameStates.playing)
         {
-            timerEnemy = 0;
-            SpawnEnemy();
-        }
-        timerEnemy += Time.deltaTime*multiplier;
 
-        if (timerPowerUp >= spawntimePowerUp)
-        {
-            timerPowerUp = 0;   
-            SpawnPowerUp(); 
+            if (timerEnemy >= spawntimeEnemy)
+            {
+                timerEnemy = 0;
+                SpawnEnemy();
+            }
+            timerEnemy += Time.deltaTime * multiplier;
+
+            if (timerPowerUp >= spawntimePowerUp)
+            {
+                timerPowerUp = 0;
+                SpawnPowerUp();
+            }
+            timerPowerUp += Time.deltaTime * multiplier;
+
         }
-        timerPowerUp += Time.deltaTime * multiplier;
+       
 
     }
     void SpawnEnemy()

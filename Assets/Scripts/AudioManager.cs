@@ -7,6 +7,13 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
+
+    
+    public static AudioManager instance;    
+
+
+    
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -20,6 +27,8 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
 
         }
+
+        instance = this;    
     }
 
     private void Start()

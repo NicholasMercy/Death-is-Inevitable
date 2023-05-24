@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
             playerState = PlayerStates.runState;
             moveSpeed = doubleSpeed;
-            Debug.Log("working");
+           // Debug.Log("working");
         }
         //walk
         else
@@ -155,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
             intialSpeed = 15f;
             doubleSpeed = 18f;
             playingCanvas.updateUI(moveSpeed, age);
+            
             
 
 

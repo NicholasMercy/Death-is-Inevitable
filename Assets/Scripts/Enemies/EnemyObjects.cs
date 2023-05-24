@@ -36,6 +36,11 @@ public class EnemyObjects : MonoBehaviour
        
        if(!death && GameManager.Instance.gameState == GameStates.playing)
         agent.SetDestination(player.position); 
+
+       if(GameManager.Instance.gameState == GameStates.gameOver)
+        {
+            Destroy(gameObject);
+        }
        
     }
 
@@ -51,6 +56,24 @@ public class EnemyObjects : MonoBehaviour
         {
             audioManager.Play("HitPlayer");
             collision.gameObject.GetComponent<PlayStats>().AddAge(ageAdd);
+           switch(type)
+            {
+                case EnemyType.alcohol:
+                    playingCanvas.updateDialogueText("DRINKS VODKA...");
+                    playingCanvas.VibrateAge();
+                    break;
+                case EnemyType.drugs:
+                    playingCanvas.updateDialogueText("TOOK SOME DRUGS...");
+                    playingCanvas.VibrateAge();
+                    break;
+                case EnemyType.smoking:
+                    playingCanvas.updateDialogueText("HAD A SMOKE...");
+                    playingCanvas.VibrateAge();
+                    break;
+
+
+
+            }
             death = true;   
             StartCoroutine(DeathOnHit());
 
@@ -60,8 +83,8 @@ public class EnemyObjects : MonoBehaviour
     {
 
         agent.speed = Cspeed;
-        playingCanvas.updateBoxStatus("SPEED REDUCTION");
-        yield return new WaitForSeconds(6f);
+        playingCanvas.updateBoxStatus("TEMPTATIONS SPEED DOWN");
+        yield return new WaitForSeconds(10f);
         playingCanvas.updateBoxStatus("Nothing Active");
         agent.speed = intialSpeed;
         
@@ -70,8 +93,8 @@ public class EnemyObjects : MonoBehaviour
     {
 
         agent.speed = Cspeed+15;
-        playingCanvas.updateBoxStatus("SPEED UP");
-        yield return new WaitForSeconds(3f);
+        playingCanvas.updateBoxStatus("TEMPTATIONS SPEED UP");
+        yield return new WaitForSeconds(7f);
         playingCanvas.updateBoxStatus("Nothing Active");
         agent.speed = intialSpeed;
 

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("States Variables")]
     public static GameManager Instance;
     public GameStates gameState;
+    bool play;
 
     float score = 0;
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     bool pause = false;
     CanvasType playingCanvas;
     AudioManager audioManager;  
+    UiManager uiManager;
     private void Awake()
     {
         Instance = this;    
@@ -27,14 +29,17 @@ public class GameManager : MonoBehaviour
         ChangeGameState(GameStates.playing);
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         playingCanvas = GameObject.FindGameObjectWithTag("Playing").GetComponent<CanvasType>();
+        playingCanvas.updateDialogueText("GOT A LONG LIFE AHEAD WHAT SHOULD I DO?");
+        uiManager = GameObject.Find("UiManager").GetComponent<UiManager>();
         audioManager.Play("Background");
+        play = true;
     }
     private void Update()
     {
        StateInputChange();  
         if(gameState == GameStates.playing) 
         {
-            score += Time.deltaTime * 0.5f;
+            score += Time.deltaTime * 0.8f;
             playingCanvas.updateScoreStatus(score);
         
         }
@@ -55,8 +60,11 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0;
                 break;
             case GameStates.gameOver:
-                LogUpdate(gameState);
-                Time.timeScale = 0;
+                LogUpdate(gameState);   
+                SoundGameOver();
+                uiManager.updateGameOverScore(score);
+
+                //Time.timeScale = 0;
                 break;
         }
         //whenever a state changes invoke the action that can be seen by other scripts
@@ -81,6 +89,16 @@ public class GameManager : MonoBehaviour
             ChangeGameState(GameStates.playing);
             pause = false;
         }
+    }
+
+    public void SoundGameOver()
+    {
+        if(play)
+        {
+            audioManager.Play("GAMEOVER");
+            play = false;   
+        }
+        
     }
 }
 

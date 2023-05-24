@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed676c5bcabde39448e5226df4dc7ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   ageReduction: 5
   timeAlive: 30
 --- !u!82 &5677876199917945481
